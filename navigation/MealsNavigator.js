@@ -54,7 +54,17 @@ const MealsFavTabNavigator = createBottomTabNavigator(
         }
       }
     },
-    Favorites: FavoritesScreen
+    Favorites: {
+      screen: FavoritesScreen,
+      navigationOptions: {
+        tabBarLabel: "Favorites!",
+        tabBarIcon: tabInfo => {
+          return (
+            <Ionicons name="ios-star" size={25} color={tabInfo.tintColor} />
+          );
+        }
+      }
+    }
   },
   {
     tabBarOptions: {
