@@ -1,7 +1,9 @@
 import { Platform } from "react-native";
+import React from "react";
 import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { createAppContainer } from "react-navigation";
+import { Ionicons } from "@expo/vector-icons";
 
 import CategoriesScreen from "../screens/CategoriesScreen";
 import CategoryMealsScreen from "../screens/CategoryMealsScreen";
@@ -22,8 +24,8 @@ const MealsNavigator = createStackNavigator(
     MealDetail: MealDetailScreen
   },
   {
-    //can set an inital route specifically instead of the defaul using the first item in the stack list above:
-    //initialRouteName: 'MealDetail' (just an example intial route other than the first one listed)
+    //can set an initial route specifically instead of the default using the first item in the stack list above:
+    //initialRouteName: 'MealDetail' (just an example initial route other than the first one listed)
     initialRouteName: "Categories",
     //will change screen change style to modal on iOS, if you set mode:modal
     mode: "modal",
@@ -36,9 +38,29 @@ const MealsNavigator = createStackNavigator(
   }
 );
 
-const MealsFavTabNavigator = createBottomTabNavigator({
-  Meals: MealsNavigator,
-  Favorites: FavoritesScreen
-});
+const MealsFavTabNavigator = createBottomTabNavigator(
+  {
+    Meals: {
+      screen: MealsNavigator,
+      navigationOptions: {
+        tabBarIcon: tabInfo => {
+          return (
+            <Ionicons
+              name="ios-restaurant"
+              size={25}
+              color={tabInfo.tintColor}
+            />
+          );
+        }
+      }
+    },
+    Favorites: FavoritesScreen
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: Colors.accentColor
+    }
+  }
+);
 
 export default createAppContainer(MealsFavTabNavigator);
